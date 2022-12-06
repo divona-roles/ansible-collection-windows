@@ -1,0 +1,73 @@
+# Copyright (C) Nicolas Lamirault <nicolas.lamirault@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+---
+# defaults file for base
+
+######################################################
+# Homebrew
+
+homebrew_repo: https://github.com/Homebrew/brew
+
+homebrew_prefix: "/opt/homebrew"
+homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
+homebrew_brew_bin_path: "{{ homebrew_prefix }}/bin"
+
+homebrew_upgrade_all_packages: false
+
+homebrew_taps:
+  - homebrew/core
+  - homebrew/services
+  - homebrew/cask-fonts
+
+homebrew_cask_appdir: /Applications
+homebrew_cask_accept_external_apps: false
+
+# Set this to your account password if casks need elevated privileges.
+# ansible_become_password: ''
+
+homebrew_use_brewfile: true
+homebrew_brewfile_dir: '~'
+
+homebrew_clear_cache: false
+
+homebrew_folders_additional: []
+
+######################################################
+# General
+
+user_dirs:
+  - Applications
+  - Projects
+  - Work
+
+xdg_dirs:
+  - Documents
+  - Downloads
+  - Music
+  - Pictures
+  - Public
+  - Templates
+  - Videos
+
+dock_applications:
+  - /System/Applications/Launchpad.app
+  - /Applications/iTerm.app
+  - /System/Applications/Messages.app
+  - /System/Applications/Calendar.app
+  - /System/Applications/Notes.app
+  - /System/Applications/Photos.app
+  - /Applications/Spotify.app
+  - "\"/System/Applications/App Store.app\""
+  - "\"/System/Applications/System Preferences.app\""
