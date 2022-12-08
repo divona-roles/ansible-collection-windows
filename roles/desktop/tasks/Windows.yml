@@ -29,6 +29,7 @@
   vars:
     packages:
       - gimp
+      - flameshot
 
 - name: Packages | Video applications
   chocolatey.chocolatey.win_chocolatey:
@@ -52,7 +53,7 @@
     state: present
   vars:
     packages:
-      - hexchat
+      - slack
 
 - name: Packages | Security tools
   chocolatey.chocolatey.win_chocolatey:
@@ -62,3 +63,5 @@
     packages:
       - keepassxc
       - wireshark
+      - 1password
+      - tailscale

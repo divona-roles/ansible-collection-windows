@@ -12,36 +12,73 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Copyright (C) 2021 Nicolas Lamirault <nicolas.lamirault@gmail.com>
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 ---
-- name: User | Create Applications directory
-  ansible.builtin.file:
-    path: C:\Applications
-    state: directory
-    mode: 0755
-
 - name: User | Create local "Users" group
   ansible.windows.win_group:
     name: Users
     description: Local Users
     state: present
 
-- name: System | Microsoft Subsystem for Linux
-  chocolatey.chocolatey.win_chocolatey:
-    name: "{{ item }}"
+- name: User | Create user directories
+  ansible.builtin.file:
+    path: C:\Users\{{ user }}\Desktop\{{ item }}
+    state: directory
+    mode: 0755
+  loop: "{{ user_dirs }}"
+
+- name: User | Create XDG directories
+  ansible.builtin.file:
+    path: C:\Users\{{ user }}\Desktop\{{ item }}
+    state: directory
+    mode: 0755
+  loop: "{{ xdg_dirs }}"
+
+- name: System | Ensure Windows Subsystem for Linux enabled.
+  ansible.windows.win_optional_feature:
+    name:
+      - Microsoft-Windows-Subsystem-Linux
+      - VirtualMachinePlatform
     state: present
-  with_items:
-    - wsl2
+  register: wsl_status
+
+- name: Restart the machine to complete the WSL install.
+  ansible.windows.win_reboot:
+  when: wsl_status.reboot_required
+
+- name: Ensure Linux kernel update package installed.
+  chocolatey.chocolatey.win_chocolatey:
+    name: wsl2
+    ignore_checksums: true
+    state: present
+
+- name: Ensure WSL2 with "{{ wsl2_distribution }}" installed.
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ wsl2_distribution }}"
+    ignore_checksums: true
+    state: present
+
+- name: System | Check for missing updates.
+  ansible.windows.win_updates:
+    state: searched
+
+- name: System | Ensure Windows updates installed.
+  ansible.windows.win_updates:
+    category_names: "{{ update_categories | default(omit) }}"
+    reboot: "{{ windows_updates_reboot | default(false) }}"
+  register: update_result
+  until: update_result.found_update_count == 0
+
+- name: System | Windows optional features.
+  ansible.windows.win_optional_feature:
+    name: "{{ windows_feature.key }}"
+    state: "{{ 'present' if windows_feature.value else 'absent' }}"
+    include_parent: true
+  loop: "{{ windows_features | dict2items }}"
+  loop_control:
+    loop_var: windows_feature
+  register: feature_status
+
+- name: System | Reboot if Windows optional feature requires it.
+  ansible.windows.win_reboot:
+  when: item.reboot_required
+  loop: "{{ feature_status.results }}"

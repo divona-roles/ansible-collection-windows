@@ -13,13 +13,20 @@
 # limitations under the License.
 
 ---
-- name: Packages | Komorebi
+- name: Packages | Windows Manager
   community.windows.win_scoop:
     name: "{{ item }}"
     state: present
-  with_items:
+  loop:
     - komorebi
     - komokana
+
+- name: Packages | Windows Manager addons
+  community.windows.win_scoop:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - nerdfont-hack
 
 # OR ?
 # https://github.com/LGUG2Z/komorebi/issues/157

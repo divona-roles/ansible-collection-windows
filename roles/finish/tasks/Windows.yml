@@ -14,9 +14,10 @@
 
 ---
 - name: Chocolatey| Clean cache
-  win_file:
+  ansible.windows.win_file:
     path: '{{ item }}'
     state: absent
-  with_items:
+  loop:
     - '%UserProfile%\AppData\Local\Temp\chocolatey\'
-  tags: cache
+    - '%UserProfile%\AppData\Local\Temp\nuget\'
+    - '%UserProfile%\AppData\Local\NuGet\Cache\'

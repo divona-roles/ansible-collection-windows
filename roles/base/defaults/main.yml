@@ -16,36 +16,36 @@
 # defaults file for base
 
 ######################################################
-# Homebrew
+# Chocolatey
 
-homebrew_repo: https://github.com/Homebrew/brew
-
-homebrew_prefix: "/opt/homebrew"
-homebrew_install_path: "{{ homebrew_prefix }}/Homebrew"
-homebrew_brew_bin_path: "{{ homebrew_prefix }}/bin"
-
-homebrew_upgrade_all_packages: false
-
-homebrew_taps:
-  - homebrew/core
-  - homebrew/services
-  - homebrew/cask-fonts
-
-homebrew_cask_appdir: /Applications
-homebrew_cask_accept_external_apps: false
-
-# Set this to your account password if casks need elevated privileges.
-# ansible_become_password: ''
-
-homebrew_use_brewfile: true
-homebrew_brewfile_dir: '~'
-
-homebrew_clear_cache: false
-
-homebrew_folders_additional: []
 
 ######################################################
 # General
+
+install_windows_updates: true
+windows_updates_reboot: true
+update_categories:
+  # * - installs all updates
+  # - "*"
+  - Critical Updates
+  # - Definition Updates
+  # - Developer Kits
+  # - Feature Packs
+  - Security Updates
+  # - Service Packs
+  # - Tools
+  - Update Rollups
+  # - Updates
+  # - Upgrades
+
+install_windows_features: false
+windows_features:
+  Microsoft-Hyper-V: true
+
+install_wsl2: true
+# wsl2_distribution: wsl-archlinux
+# wsl2_distribution: wsl-debiangnulinux
+wsl2_distribution: wsl-ubuntu-2004
 
 user_dirs:
   - Applications
@@ -60,14 +60,3 @@ xdg_dirs:
   - Public
   - Templates
   - Videos
-
-dock_applications:
-  - /System/Applications/Launchpad.app
-  - /Applications/iTerm.app
-  - /System/Applications/Messages.app
-  - /System/Applications/Calendar.app
-  - /System/Applications/Notes.app
-  - /System/Applications/Photos.app
-  - /Applications/Spotify.app
-  - "\"/System/Applications/App Store.app\""
-  - "\"/System/Applications/System Preferences.app\""
