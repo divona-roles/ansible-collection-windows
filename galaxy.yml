@@ -11,20 +11,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
 
+---
 namespace: divona
 name: windows
 version: 0.1.0
 readme: README.md
 authors:
-- Nicolas Lamirault <nicolas.lamirault@gmail.com>
+  - Nicolas Lamirault <nicolas.lamirault@gmail.com>
 description: your collection description
 license:
-- Apache-2.0
+  - Apache-2.0
 license_file: LICENSE
 tags:
-- windows
-- workstation
+  - windows
+  - workstation
 dependencies: {}
 repository: http://github.com/divona-roles/ansible-collection-windows
 documentation: http://github.com/divona-roles/ansible-collection-windows

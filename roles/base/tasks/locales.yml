@@ -15,5 +15,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ---
-# vars file for setup
-user: "divona"
+- name: System | Set preferred languages
+  ansible.windows.win_user_languages:
+    languages:
+      - en-US
+      - fr-FR
+
+- name: System | Set timezone
+  community.windows.win_timezone:
+    timezone: GMT Standard Time
