@@ -29,3 +29,13 @@
     members:
       - "{{ username }}"
     name: "docker-users"
+
+- name: Hyper-V | Install
+  ansible.windows.win_feature:
+    name: Hyper-V
+    include_management_tools: true
+  register: hyper_v
+
+- name: System | Reboot
+  when: hyper_v.reboot_required
+  ansible.windows.win_reboot:

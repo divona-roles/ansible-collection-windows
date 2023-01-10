@@ -15,4 +15,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ---
-# handlers file for cloud
+- name: Restart WinDHCP
+  ansible.windows.win_service:
+    name: WinDHCP
+    state: restarted
