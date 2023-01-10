@@ -13,6 +13,14 @@
 # limitations under the License.
 
 ---
+- name: Packages | Desktop applications
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - ueli
+
 - name: Packages | Web applications
   chocolatey.chocolatey.win_chocolatey:
     name: "{{ packages }}"
