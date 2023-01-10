@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
 
 ---
 - name: User | Create local "Users" group
@@ -41,17 +43,17 @@
     state: present
   register: wsl_status
 
-- name: Restart the machine to complete the WSL install.
+- name: System | Restart the machine to complete the WSL install.
   ansible.windows.win_reboot:
   when: wsl_status.reboot_required
 
-- name: Ensure Linux kernel update package installed.
+- name: System | Ensure Linux kernel update package installed.
   chocolatey.chocolatey.win_chocolatey:
     name: wsl2
     ignore_checksums: true
     state: present
 
-- name: Ensure WSL2 with "{{ wsl2_distribution }}" installed.
+- name: System | Ensure WSL2 distribution installed.
   chocolatey.chocolatey.win_chocolatey:
     name: "{{ wsl2_distribution }}"
     ignore_checksums: true
@@ -67,6 +69,54 @@
     reboot: "{{ windows_updates_reboot | default(false) }}"
   register: update_result
   until: update_result.found_update_count == 0
+
+- name: System | Disable telemetry
+  ansible.windows.win_regedit:
+    path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\{{ item }}
+    name: Debugger
+    data: systray.exe
+    type: string
+  loop:
+    - compattelrunner.exe
+    - wsqmcons.exe
+
+- name: System | Uninstall OneDrive
+  ansible.windows.win_shell: |
+    $process = Get-Process onedrive -ErrorAction SilentlyContinue
+    if ($null -ne $process) {
+      $process | Stop-Process -Force
+      Start-Process "$env:SystemRoot\SysWOW64\OneDriveSetup.exe" "/uninstall" -Wait
+      Start-Process "$env:SystemRoot\System32\OneDriveSetup.exe" "/uninstall" -Wait
+    }
+    $true
+
+- name: System | Uninstall built-in apps
+  win_shell: |
+    Get-AppxPackage *3dviewer* | Remove-AppxPackage
+    Get-AppxPackage *amazon* | Remove-AppxPackage
+    Get-AppxPackage *bingnews* | Remove-AppxPackage
+    Get-AppxPackage *bingweather* | Remove-AppxPackage
+    Get-AppxPackage *clipchamp* | Remove-AppxPackage
+    Get-AppxPackage *disney* | Remove-AppxPackage
+    Get-AppxPackage *facebook* | Remove-AppxPackage
+    Get-AppxPackage *family* | Remove-AppxPackage
+    Get-AppxPackage *feedback* | Remove-AppxPackage
+    Get-AppxPackage *getstarted* | Remove-AppxPackage # Tips
+    Get-AppxPackage *mixedreality* | Remove-AppxPackage
+    Get-AppxPackage *mspaint* | Remove-AppxPackage # Paint 3D
+    Get-AppxPackage *office* | Remove-AppxPackage
+    Get-AppxPackage *onenote* | Remove-AppxPackage
+    Get-AppxPackage *quickassist* | Remove-AppxPackage
+    Get-AppxPackage *skype* | Remove-AppxPackage
+    Get-AppxPackage *solitaire* | Remove-AppxPackage
+    Get-AppxPackage *spotify* | Remove-AppxPackage
+    Get-AppxPackage *teams* | Remove-AppxPackage
+    Get-AppxPackage *tiktok* | Remove-AppxPackage
+    Get-AppxPackage *todos* | Remove-AppxPackage # requires account
+    Get-AppxPackage *whatsapp* | Remove-AppxPackage
+    Get-AppxPackage *windowsmaps* | Remove-AppxPackage
+    Get-AppxPackage *zunevideo* | Remove-AppxPackage # Movies & TV
+    $true
 
 - name: System | Windows optional features.
   ansible.windows.win_optional_feature:

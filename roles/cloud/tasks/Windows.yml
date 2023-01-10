@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
 
 ---
 - name: Packages | Docker and co
@@ -27,3 +29,13 @@
     members:
       - "{{ username }}"
     name: "docker-users"
+
+- name: Hyper-V | Install
+  ansible.windows.win_feature:
+    name: Hyper-V
+    include_management_tools: true
+  register: hyper_v
+
+- name: System | Reboot
+  when: hyper_v.reboot_required
+  ansible.windows.win_reboot:
