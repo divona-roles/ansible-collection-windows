@@ -5,3 +5,7 @@ galaxy_info:
   # company: your company (optional)
 
   license: Apache-2.0
+
+  galaxy_tags: []
+
+dependencies: []
