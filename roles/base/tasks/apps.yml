@@ -17,27 +17,27 @@
 ---
 - name: Packages | Install shell tools
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ divona_windows_ }}"
     state: present
   vars:
-    packages:
+    divona_windows_packages:
       - fzf
 
 - name: Packages | Install terminal emulators
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ divona_windows_ }}"
     state: present
   vars:
-    packages:
+    divona_windows_packages:
       - microsoft-windows-terminal
       - cmder
 
 - name: Packages | Install commons tools
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ divona_windows_ }}"
     state: present
   vars:
-    packages:
+    divona_windows_packages:
       - git
       - cygwin
       - windirstat
