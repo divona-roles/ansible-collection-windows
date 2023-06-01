@@ -24,9 +24,9 @@
 ######################################################
 # General
 
-install_windows_updates: true
-windows_updates_reboot: true
-update_categories:
+divona_windows_install_windows_updates: true
+divona_windows_windows_updates_reboot: true
+divona_windows_update_categories:
   # * - installs all updates
   # - "*"
   - Critical Updates
@@ -40,21 +40,21 @@ update_categories:
   # - Updates
   # - Upgrades
 
-install_windows_features: false
-windows_features:
+divona_windows_install_windows_features: false
+divona_windows_windows_features:
   Microsoft-Hyper-V: true
 
-install_wsl2: true
-# wsl2_distribution: wsl-archlinux
-# wsl2_distribution: wsl-debiangnulinux
-wsl2_distribution: wsl-ubuntu-2004
+divona_windows_install_wsl2: true
+# divona_windows_wsl2_distribution: wsl-archlinux
+# divona_windows_wsl2_distribution: wsl-debiangnulinux
+divona_windows_wsl2_distribution: wsl-ubuntu-2004
 
-user_dirs:
+divona_windows_user_dirs:
   - Applications
   - Projects
   - Work
 
-xdg_dirs:
+divona_windows_xdg_dirs:
   - Documents
   - Downloads
   - Music

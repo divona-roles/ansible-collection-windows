@@ -26,14 +26,14 @@
     path: C:\Users\{{ user }}\Desktop\{{ item }}
     state: directory
     mode: 0755
-  loop: "{{ user_dirs }}"
+  loop: "{{ divona_windows_user_dirs }}"
 
 - name: User | Create XDG directories
   ansible.builtin.file:
     path: C:\Users\{{ user }}\Desktop\{{ item }}
     state: directory
     mode: 0755
-  loop: "{{ xdg_dirs }}"
+  loop: "{{ divona_windows_xdg_dirs }}"
 
 - name: System | Ensure Windows Subsystem for Linux enabled.
   ansible.windows.win_optional_feature:
@@ -55,7 +55,7 @@
 
 - name: System | Ensure WSL2 distribution installed.
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ wsl2_distribution }}"
+    name: "{{ divona_windows_wsl2_distribution }}"
     ignore_checksums: true
     state: present
 
@@ -65,8 +65,8 @@
 
 - name: System | Ensure Windows updates installed.
   ansible.windows.win_updates:
-    category_names: "{{ update_categories | default(omit) }}"
-    reboot: "{{ windows_updates_reboot | default(false) }}"
+    category_names: "{{ divona_windows_update_categories | default(omit) }}"
+    reboot: "{{ divona_windows_windows_updates_reboot | default(false) }}"
   register: update_result
   until: update_result.found_update_count == 0
 
@@ -123,7 +123,7 @@
     name: "{{ windows_feature.key }}"
     state: "{{ 'present' if windows_feature.value else 'absent' }}"
     include_parent: true
-  loop: "{{ windows_features | dict2items }}"
+  loop: "{{ divona_windows_windows_features | dict2items }}"
   loop_control:
     loop_var: windows_feature
   register: feature_status

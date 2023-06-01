@@ -16,7 +16,3 @@
 
 ---
 # defaults file for wm
-
-homebrew_taps_desktop:
-  - koekeishiya/formulae
-  - FelixKratz/formulae
