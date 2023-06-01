@@ -91,7 +91,7 @@
     $true
 
 - name: System | Uninstall built-in apps
-  win_shell: |
+  ansible.windows.win_shell: |
     Get-AppxPackage *3dviewer* | Remove-AppxPackage
     Get-AppxPackage *amazon* | Remove-AppxPackage
     Get-AppxPackage *bingnews* | Remove-AppxPackage
