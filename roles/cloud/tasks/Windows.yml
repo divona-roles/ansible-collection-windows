@@ -17,12 +17,10 @@
 ---
 - name: Packages | Docker and co
   chocolatey.chocolatey.win_chocolatey:
-    chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      - docker-desktop
+  loop:
+    - docker-desktop
 
 - name: System | User is in docker group
   ansible.windows.win_group_membership:

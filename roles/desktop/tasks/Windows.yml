@@ -17,70 +17,62 @@
 ---
 - name: Packages | Desktop applications
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      - ueli
+  loop:
+    - ueli
 
 - name: Packages | Web applications
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      - googlechrome
-      - tor-browser
+  loop:
+    - googlechrome
+    - tor-browser
 
 - name: Packages | Graphics applications
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      - gimp
-      - flameshot
+  loop:
+    - gimp
+    - flameshot
 
 - name: Packages | Video applications
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      - vlc
+  loop:
+    - vlc
 
 - name: Packages | Music applications
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      - spotify
+  loop:
+    - spotify
 
 - name: Packages | Communications applications
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      - slack
+  loop:
+    - slack
 
 - name: Packages | Networking tools
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      # - keepassxc
-      - wireshark
-      - 1password
-      - tailscale
+  loop:
+    # - keepassxc
+    - wireshark
+    - 1password
+    - tailscale
 
 - name: Packages | Security tools
   chocolatey.chocolatey.win_chocolatey:
-    name: "{{ packages }}"
+    name: "{{ item }}"
     state: present
-  vars:
-    packages:
-      - portmaster
-      - glasswire
+  loop:
+    - portmaster
+    - glasswire
