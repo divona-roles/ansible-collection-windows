@@ -41,11 +41,11 @@
       - Microsoft-Windows-Subsystem-Linux
       - VirtualMachinePlatform
     state: present
-  register: wsl_status
+  register: divona_windows_wsl_status
 
 - name: System | Restart the machine to complete the WSL install.
   ansible.windows.win_reboot:
-  when: wsl_status.reboot_required
+  when: divona_windows_wsl_status.reboot_required
 
 - name: System | Ensure Linux kernel update package installed.
   chocolatey.chocolatey.win_chocolatey:
