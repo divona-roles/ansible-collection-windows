@@ -23,6 +23,6 @@ collections:
   - name: chocolatey.chocolatey
     version: 1.4.0
   - name: community.windows
-    version: 1.13.0
+    version: 2.0.0
 
 roles: []
