@@ -19,7 +19,7 @@ collections:
   - name: community.general
     version: 7.4.0
   - name: ansible.windows
-    version: 2.1.0
+    version: 2.2.0
   - name: chocolatey.chocolatey
     version: 1.5.1
   - name: community.windows
