@@ -15,6 +15,14 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ---
+- name: Packages | Window manager
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - komorebi
+
 - name: Packages | Desktop applications
   chocolatey.chocolatey.win_chocolatey:
     name: "{{ packages }}"
