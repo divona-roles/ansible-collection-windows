@@ -22,6 +22,7 @@
   vars:
     packages:
       - komorebi
+      - glazewm
 
 - name: Packages | Desktop applications
   chocolatey.chocolatey.win_chocolatey:
