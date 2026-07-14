@@ -10,6 +10,6 @@ collections:
   - name: chocolatey.chocolatey
     version: 1.5.3
   - name: community.windows
-    version: 3.1.0
+    version: 3.3.0
 
 roles: []
